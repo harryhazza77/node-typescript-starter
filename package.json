@@ -2,7 +2,7 @@
     "name": "node-backend-typescript",
     "version": "1.0.0",
     "main": "index.js",
-    "author": "harry.patel <harry.patel@magic.works>",
+    "author": "harry.patel <harryhazza77@yahoo.co.uk>",
     "license": "MIT",
     "devDependencies": {
         "@typescript-eslint/eslint-plugin": "^3.9.0",
