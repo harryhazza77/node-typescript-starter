@@ -14,6 +14,7 @@
         "husky": "^4.2.5",
         "prettier": "^2.0.5",
         "serverless": "^1.70.0",
+        "serverless-domain-manager": "^4.2.0",
         "serverless-iam-roles-per-function": "^2.0.2",
         "sls-dev-tools": "^1.1.10",
         "typescript": "^4.0.2"
