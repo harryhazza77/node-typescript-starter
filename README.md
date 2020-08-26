@@ -1,4 +1,4 @@
-# node serverless AWS lambda typescript starter
+# typescript AWS lambda starter
 
 This is a starter project for doing node projects in typescript. It is aimed at serverless AWS lambda projects.
 
