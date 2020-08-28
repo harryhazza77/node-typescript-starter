@@ -4,6 +4,9 @@ plugins:
     - serverless-reqvalidator-plugin
     - serverless-aws-documentation
 
+custom:
+    documentation: ${file(./serverless.api.docs.yml):documentation}
+
 provider:
     name: aws
     runtime: nodejs12.x
@@ -14,11 +17,11 @@ provider:
         apiGateway: true
         lambda: true
     iamRoleStatements:
-        - Effect: "Allow"
+        - Effect: 'Allow'
           Action:
               - xray:PutTelemetryRecords
               - xray:PutTraceSegments
-          Resource: "*"
+          Resource: '*'
 
 functions:
     helloGet:
@@ -44,8 +47,8 @@ functions:
                           querystrings:
                               id: true
                   documentation:
-                      summary: "Get by Id example"
-                      description: "An example of a GET request with a mandatory query param"
+                      summary: 'Get by Id example'
+                      description: 'An example of a GET request with a mandatory query param'
                       tags:
                           - Get
             - http:
@@ -54,22 +57,22 @@ functions:
                   cors: true
                   reqValidatorName: RequestValidator
                   documentation:
-                      summary: "Post example"
-                      description: "An example of a POST request"
+                      summary: 'Post example'
+                      description: 'An example of a POST request'
                       tags:
                           - Post
                       requestModels:
-                          "application/json": APostRequest
+                          'application/json': APostRequest
                   methodResponses:
                       - statusCode: 200
                         responseModels:
-                            "application/json": APostResponse
+                            'application/json': APostResponse
                       - ${file(./serverless.api.docs.yml):documentation.commonModelSchemaFragments.MethodResponse400Json}
 
 resources:
     Resources:
         RequestValidator:
-            Type: "AWS::ApiGateway::RequestValidator"
+            Type: 'AWS::ApiGateway::RequestValidator'
             Properties:
                 Name: reqValidator
                 RestApiId:
@@ -79,7 +82,7 @@ resources:
 
         GatewayResponseDefault4XX:
             # if request.parameters result in a 400, the lambda integration is not invoked and so we need to add CORS to the gateway response otherwise browsers will see CORS errors not the intended 400 errors
-            Type: "AWS::ApiGateway::GatewayResponse"
+            Type: 'AWS::ApiGateway::GatewayResponse'
             Properties:
                 ResponseParameters:
                     gatewayresponse.header.Access-Control-Allow-Origin: "'*'"
@@ -90,7 +93,7 @@ resources:
                     Ref: ApiGatewayRestApi
         GatewayResponseDefault5XX:
             # if there is a 500 prior to the lambda integration being invoked, CORS needs to be added to the gateway response otherwise browsers will see CORS errors not the 500 errors
-            Type: "AWS::ApiGateway::GatewayResponse"
+            Type: 'AWS::ApiGateway::GatewayResponse'
             Properties:
                 ResponseParameters:
                     gatewayresponse.header.Access-Control-Allow-Origin: "'*'"
@@ -99,6 +102,3 @@ resources:
                 ResponseType: DEFAULT_5XX
                 RestApiId:
                     Ref: ApiGatewayRestApi
-
-custom:
-    documentation: ${file(./serverless.api.docs.yml):documentation}
