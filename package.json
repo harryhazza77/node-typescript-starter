@@ -18,6 +18,7 @@
         "serverless": "^1.70.0",
         "serverless-aws-documentation": "^1.1.0",
         "serverless-iam-roles-per-function": "^2.0.2",
+        "serverless-layers": "^2.2.4",
         "serverless-reqvalidator-plugin": "^1.0.3",
         "sls-dev-tools": "^1.1.10",
         "typescript": "^4.0.2"
@@ -34,5 +35,8 @@
     },
     "scripts": {
         "lint": "eslint '*/**/*.{js,ts,tsx}' --quiet --fix"
+    },
+    "dependencies": {
+        "aws-sdk": "^2.741.0"
     }
 }

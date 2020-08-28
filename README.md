@@ -24,7 +24,8 @@ This is a starter project for doing node projects in typescript. It is aimed at 
     -   single function for all HTTP methods
 -   CORS (**to the whole world**) is enabled
 -   [lumigo-cli](https://github.com/lumigo-io/lumigo-CLI) for additional commands against AWS particularly useful if you have multiple AWS profiles as you can use `npx lumigo-cli whoami` and `npx lumigo-cli switch-profile`
--   documentation with request validation by AWS API Gateway such that lambda's are not invoked. This also enabled OpenApi (FKKA swagger) documentation.
+-   documentation with request validation by AWS API Gateway such that lambda's are not invoked. This also enables OpenApi (FKKA swagger) documentation.
+-   use of lambda layers which can reduce deployment times
 
 ### AWS best practices for lambdas
 

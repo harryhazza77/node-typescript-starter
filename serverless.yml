@@ -3,9 +3,26 @@ service: hello-world
 plugins:
     - serverless-reqvalidator-plugin
     - serverless-aws-documentation
+    - serverless-layers
+
+package:
+    include:
+        - dist/src/**
+    exclude:
+        - src/**
+        - yarn.lock
+        - tsconfig.json
+        - package.json
+        - README.md
+        - scripts/**
+        - dist/scripts/**
+        - serverless.api.docs.yml
 
 custom:
     documentation: ${file(./serverless.api.docs.yml):documentation}
+    serverless-layers:
+        dependenciesPath: ./package.json
+        layersDeploymentBucket: hello-world-dev-serverlessdeploymentbucket-fb6dwcov3te1
 
 provider:
     name: aws
