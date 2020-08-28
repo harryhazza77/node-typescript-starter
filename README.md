@@ -16,7 +16,9 @@ This is a starter project for doing node projects in typescript. It is aimed at 
 
 ### Serverless:
 - uses the [serverless framework](https://www.serverless.com/) _but pegged to version 1.70.0 because after this, hot reloading does not work_
-- setup with a simple hello world GET function using typescript types
+- setup with 2 simple hello world handler functions illustrating two approaches of mapping from serverless yaml to js
+   - function per HTTP method (e.g. a GET). This is typical but becomes repetitive and can bloat your yaml
+   - single function for all HTTP methods
 - CORS (**to the whole world**) is enabled
 - [lumigo-cli](https://github.com/lumigo-io/lumigo-CLI) for additional commands against AWS particularly useful if you have multiple AWS profiles as you can use `npx lumigo-cli whoami` and `npx lumigo-cli switch-profile`
 

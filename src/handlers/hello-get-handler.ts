@@ -1,7 +1,7 @@
 import { APIGatewayEvent, APIGatewayProxyResult } from 'aws-lambda';
 
 export default async function helloGetHandler(event: APIGatewayEvent): Promise<APIGatewayProxyResult> {
-    const { headers, pathParameters, queryStringParameters, body } = event;
+    const { multiValueHeaders, pathParameters, multiValueQueryStringParameters } = event;
     return {
         statusCode: 200,
         headers: {
@@ -10,10 +10,9 @@ export default async function helloGetHandler(event: APIGatewayEvent): Promise<A
         },
         body: JSON.stringify({
             req: {
-                headers,
+                headers: multiValueHeaders,
                 pathParameters,
-                queryStringParameters,
-                body,
+                queryStringParameters: multiValueQueryStringParameters,
             },
         }),
     };
