@@ -5079,6 +5079,11 @@ object-copy@^0.1.0:
     define-property "^0.2.5"
     kind-of "^3.0.3"
 
+object-hash@^1.1.7:
+  version "1.3.1"
+  resolved "https://registry.yarnpkg.com/object-hash/-/object-hash-1.3.1.tgz#fde452098a951cb145f039bb7d455449ddc126df"
+  integrity sha512-OSuu/pU4ENM9kmREg0BdNrUDIl1heYa4mBZacJc+vVWz4GtAwu7jO8s4AIt2aGRUTqxykpWzI3Oqnsm13tTMDA==
+
 object-hash@^2.0.3:
   version "2.0.3"
   resolved "https://registry.yarnpkg.com/object-hash/-/object-hash-2.0.3.tgz#d12db044e03cd2ca3d77c0570d87225b02e1e6ea"
@@ -6151,12 +6156,24 @@ send@^0.16.2:
     range-parser "~1.2.0"
     statuses "~1.4.0"
 
+serverless-aws-documentation@^1.1.0:
+  version "1.1.0"
+  resolved "https://registry.yarnpkg.com/serverless-aws-documentation/-/serverless-aws-documentation-1.1.0.tgz#e41d08de84d651f3db84348d926db369292731ff"
+  integrity sha512-b2iM1eZIWxQjAa6RNnARq+iXgiffbtSmKnZUh7l8KOkaD/BapqfOkKKi6MGxp3KxQFkW31sVsAiqJ0NQSSyXOw==
+  dependencies:
+    object-hash "^1.1.7"
+
 serverless-iam-roles-per-function@^2.0.2:
   version "2.0.2"
   resolved "https://registry.yarnpkg.com/serverless-iam-roles-per-function/-/serverless-iam-roles-per-function-2.0.2.tgz#c64eb2f34552e59d5fb8cb2169ebbd27734a6774"
   integrity sha512-3zv4Af3x7KJHC4fuJMHniEEstCljMghReaYIg94Spdsqkhiy8GJ3yfJ5Jy+wiG/DvyObK91JJNMjLhDnDc+vCQ==
   dependencies:
     lodash "^4.17.15"
+
+serverless-reqvalidator-plugin@^1.0.3:
+  version "1.0.3"
+  resolved "https://registry.yarnpkg.com/serverless-reqvalidator-plugin/-/serverless-reqvalidator-plugin-1.0.3.tgz#ddfbbd96202141cedd3afedce58ada641fcea390"
+  integrity sha512-OCGeF2w+LF5ITeWbhK7773j5s5dfM1+Qd92mUC9LAePRSSlxR+dS9wMEzzeOs3sdSeh/b28xRIkNFhFizGnB6Q==
 
 serverless@^1.70.0:
   version "1.79.0"

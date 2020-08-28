@@ -1,39 +1,104 @@
 service: hello-world
 
+plugins:
+    - serverless-reqvalidator-plugin
+    - serverless-aws-documentation
+
 provider:
-  name: aws
-  runtime: nodejs12.x
-  memorySize: 256
-  logRetentionDays: 10
-  timeout: 5
-  tracing:
-    apiGateway: true
-    lambda: true
-  iamRoleStatements:
-    - Effect: "Allow"
-      Action:
-        - xray:PutTelemetryRecords
-        - xray:PutTraceSegments
-      Resource: "*"
+    name: aws
+    runtime: nodejs12.x
+    memorySize: 256
+    logRetentionDays: 10
+    timeout: 5
+    tracing:
+        apiGateway: true
+        lambda: true
+    iamRoleStatements:
+        - Effect: "Allow"
+          Action:
+              - xray:PutTelemetryRecords
+              - xray:PutTraceSegments
+          Resource: "*"
 
 functions:
-  helloGet:
-    handler: dist/src/handlers/hello-get-handler.default
-    iamRoleStatementsName: hello-get-iam-role
-    events:
-      - http:
-          path: helloMethod
-          method: get
-          # cors: true not needed for a GET as browsers do not issue pre-flight OPTIONS requests for GETS or POSTS.
-  helloResource:
-    handler: dist/src/handlers/hello-resource-handler.default
-    iamRoleStatementsName: hello-resource-iam-role
-    events:
-      - http:
-          path: helloResource
-          method: get
-          # cors: true not needed for a GET as browsers do not issue pre-flight OPTIONS requests for GETS or POSTS.
-      - http:
-          path: helloResource/{routeArgs+}
-          method: any
-          cors: true
+    helloGet:
+        handler: dist/src/handlers/hello-get-handler.default
+        iamRoleStatementsName: hello-get-iam-role
+        events:
+            - http:
+                  path: hello
+                  method: get
+                  # cors: true not needed for a GET as browsers do not issue pre-flight OPTIONS requests for GETS or POSTS.
+
+    helloResource:
+        handler: dist/src/handlers/hello-resource-handler.default
+        iamRoleStatementsName: hello-resource-iam-role
+        events:
+            - http:
+                  path: helloResource
+                  method: get
+                  # cors: true not needed for a GET as browsers do not issue pre-flight OPTIONS requests for GETS or POSTS.
+                  reqValidatorName: RequestValidator
+                  request:
+                      parameters:
+                          querystrings:
+                              id: true
+                  documentation:
+                      summary: "Get by Id example"
+                      description: "An example of a GET request with a mandatory query param"
+                      tags:
+                          - Get
+            - http:
+                  path: helloResource
+                  method: post
+                  cors: true
+                  reqValidatorName: RequestValidator
+                  documentation:
+                      summary: "Post example"
+                      description: "An example of a POST request"
+                      tags:
+                          - Post
+                      requestModels:
+                          "application/json": APostRequest
+                  methodResponses:
+                      - statusCode: 200
+                        responseModels:
+                            "application/json": APostResponse
+                      - ${file(./serverless.api.docs.yml):documentation.commonModelSchemaFragments.MethodResponse400Json}
+
+resources:
+    Resources:
+        RequestValidator:
+            Type: "AWS::ApiGateway::RequestValidator"
+            Properties:
+                Name: reqValidator
+                RestApiId:
+                    Ref: ApiGatewayRestApi
+                ValidateRequestBody: true
+                ValidateRequestParameters: true
+
+        GatewayResponseDefault4XX:
+            # if request.parameters result in a 400, the lambda integration is not invoked and so we need to add CORS to the gateway response otherwise browsers will see CORS errors not the intended 400 errors
+            Type: "AWS::ApiGateway::GatewayResponse"
+            Properties:
+                ResponseParameters:
+                    gatewayresponse.header.Access-Control-Allow-Origin: "'*'"
+                    gatewayresponse.header.Access-Control-Allow-Headers: "'Content-Type,X-Amz-Date,Authorization,X-Api-Key,X-Amz-Security-Token'"
+                    gatewayresponse.header.Access-Control-Allow-Methods: "'GET,POST,OPTIONS'"
+                ResponseType: DEFAULT_4XX
+                RestApiId:
+                    Ref: ApiGatewayRestApi
+        GatewayResponseDefault5XX:
+            # if there is a 500 prior to the lambda integration being invoked, CORS needs to be added to the gateway response otherwise browsers will see CORS errors not the 500 errors
+            Type: "AWS::ApiGateway::GatewayResponse"
+            Properties:
+                ResponseParameters:
+                    gatewayresponse.header.Access-Control-Allow-Origin: "'*'"
+                    gatewayresponse.header.Access-Control-Allow-Headers: "'Content-Type,X-Amz-Date,Authorization,X-Api-Key,X-Amz-Security-Token'"
+                    gatewayresponse.header.Access-Control-Allow-Methods: "'GET,POST,OPTIONS'"
+                ResponseType: DEFAULT_5XX
+                RestApiId:
+                    Ref: ApiGatewayRestApi
+
+custom:
+    documentation: ${file(./serverless.api.docs.yml):documentation}

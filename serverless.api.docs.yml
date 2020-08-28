@@ -1,0 +1,49 @@
+documentation:
+    api:
+        info:
+            version: "1.0.0"
+            title: My API
+            description: This is my API
+        tags:
+            - name: Post
+              description: Post examples
+    models:
+        - name: MessageResponse
+          contentType: application/json
+          schema:
+              type: object
+              properties:
+                  message:
+                      type: string
+        - name: APostRequest
+          contentType: application/json
+          schema:
+              required:
+                  - email
+                  - password
+              properties:
+                  email:
+                      type: string
+                  password:
+                      type: string
+        - name: APostResponse
+          contentType: application/json
+          schema:
+              type: object
+              properties:
+                  result:
+                      type: string
+        - name: 400JsonResponse
+          contentType: application/json
+          schema:
+              type: object
+              properties:
+                  message:
+                      type: string
+                  statusCode:
+                      type: number
+    commonModelSchemaFragments:
+        MethodResponse400Json:
+            statusCode: 400
+            responseModels:
+                application/json: 400JsonResponse
