@@ -8,14 +8,14 @@
         "@types/aws-lambda": "^8.10.61",
         "@typescript-eslint/eslint-plugin": "^3.9.0",
         "@typescript-eslint/parser": "^3.9.0",
-        "cz-conventional-changelog": "^3.2.0",
+        "cz-conventional-changelog": "^3.3.0",
         "eslint": "^7.6.0",
         "eslint-config-prettier": "^6.11.0",
         "eslint-plugin-prettier": "^3.1.4",
         "husky": "^4.2.5",
         "lumigo-cli": "^0.46.2",
-        "prettier": "^2.0.5",
-        "serverless": "^1.70.0",
+        "prettier": "^2.1.1",
+        "serverless": "^1.80.0",
         "serverless-aws-documentation": "^1.1.0",
         "serverless-iam-roles-per-function": "^2.0.2",
         "serverless-layers": "^2.2.4",
@@ -37,6 +37,6 @@
         "lint": "eslint '*/**/*.{js,ts,tsx}' --quiet --fix"
     },
     "dependencies": {
-        "aws-sdk": "^2.741.0"
+        "aws-sdk": "^2.742.0"
     }
 }
