@@ -1,6 +1,6 @@
-import { APIGatewayEvent, APIGatewayProxyResult } from 'aws-lambda';
+import { APIGatewayProxyHandler } from 'aws-lambda';
 
-export default async function helloResourceHandler(event: APIGatewayEvent): Promise<APIGatewayProxyResult> {
+const handler: APIGatewayProxyHandler = async (event) => {
     const { multiValueHeaders, pathParameters, multiValueQueryStringParameters, body, requestContext } = event;
     const reply: { result: string | null } = { result: null };
     let statusCode = 200;
@@ -40,4 +40,6 @@ export default async function helloResourceHandler(event: APIGatewayEvent): Prom
             reply,
         }),
     };
-}
+};
+
+export default handler;

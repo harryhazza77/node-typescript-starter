@@ -1,6 +1,6 @@
-import { APIGatewayEvent, APIGatewayProxyResult } from 'aws-lambda';
+import { APIGatewayProxyHandler } from 'aws-lambda';
 
-export default async function helloGetHandler(event: APIGatewayEvent): Promise<APIGatewayProxyResult> {
+const handler: APIGatewayProxyHandler = async (event) => {
     const { multiValueHeaders, pathParameters, multiValueQueryStringParameters } = event;
     return {
         statusCode: 200,
@@ -16,4 +16,6 @@ export default async function helloGetHandler(event: APIGatewayEvent): Promise<A
             },
         }),
     };
-}
+};
+
+export default handler;
